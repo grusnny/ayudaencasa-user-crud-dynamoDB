@@ -1,5 +1,6 @@
 package com.ayudaencasa.user;
 
+import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedScanList;
 import com.ayudaencasa.user.model.User;
 import com.ayudaencasa.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,36 +10,37 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @SpringBootApplication
+@RequestMapping(value = "/user")
 public class UserApplication {
 
 	@Autowired
 	private UserRepository repository;
 
-	@GetMapping("/getuser/{uId}")
+	@GetMapping("/{uId}")
 	public User findUser(@PathVariable String uId){
 		return repository.findUserByuId(uId);
 	}
 
-	@PostMapping("/saveuser")
+	@PostMapping
 	public User AddUser(@RequestBody User user){
 		return repository.addUser(user);
 	}
 
-	@DeleteMapping("/deleteuser")
+	@DeleteMapping
 	public String DeleteUser(@RequestBody User user){
 		return repository.deleteUser(user);
 	}
 
-	@PutMapping("/updateuser")
+	@PutMapping
 	public String UpdateUser(@RequestBody User user){
 		return repository.editUser(user);
 	}
 
 	@GetMapping
-	public User[] GetAllUsers(String uId){
-		User users[] = new User[0];
-		return users;
+	public PaginatedScanList<User> GetAllUsers(){
+		return repository.findAllUsers();
 	}
+
 	public static void main(String[] args) {
 		SpringApplication.run(UserApplication.class, args);
 	}

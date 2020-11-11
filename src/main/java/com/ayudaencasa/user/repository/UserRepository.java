@@ -2,6 +2,8 @@ package com.ayudaencasa.user.repository;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBSaveExpression;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
+import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedScanList;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.ExpectedAttributeValue;
 import com.ayudaencasa.user.model.User;
@@ -23,6 +25,10 @@ public class UserRepository {
     }
     public User findUserByuId(String uId){
         return mapper.load(User.class,uId);
+    }
+
+    public PaginatedScanList<User> findAllUsers() {
+        return mapper.scan(User.class, new DynamoDBScanExpression());
     }
     public String deleteUser (User user){
        mapper.delete(user);
