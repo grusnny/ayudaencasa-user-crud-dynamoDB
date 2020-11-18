@@ -8,9 +8,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin(origins = {"http://localhost:3000", "http://ayudaencasa-proyectointegrador.s3-website-us-east-1.amazonaws.com"})
 @RestController
 @SpringBootApplication
-@RequestMapping(value = "/user")
+@RequestMapping(value = "/users")
 public class UserApplication {
 
 	@Autowired
